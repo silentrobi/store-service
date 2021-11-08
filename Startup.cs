@@ -6,13 +6,14 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using StoreService.Database.Contexts;
 
-namespace store_service
+namespace StoreService
 {
     public class Startup
     {
@@ -32,6 +33,15 @@ namespace store_service
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "store_service", Version = "v1" });
             });
+
+            services.AddDbContext<StoreDbContext>(options =>
+           {
+               options.UseNpgsql(Environment.GetEnvironmentVariable("ConnectionStrings"),
+                      npSqlOptions =>
+                      {
+                          npSqlOptions.CommandTimeout(3300);
+                      });
+           });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
