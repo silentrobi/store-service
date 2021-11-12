@@ -1,3 +1,7 @@
+using System;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using StoreService.Models;
 
@@ -14,9 +18,39 @@ namespace StoreService.Database.Contexts
         public DbSet<Market> Market { get; set; }
         public DbSet<Category> Category { get; set; }
 
-         protected override void OnModelCreating(ModelBuilder modelBuilder)
+
+        public override int SaveChanges()
         {
-             base.OnModelCreating(modelBuilder);
+            AddTimestamps();
+            return base.SaveChanges();
+        }
+
+        public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+        {
+            AddTimestamps();
+            return await base.SaveChangesAsync();
+        }
+
+        private void AddTimestamps()
+        {
+            var entities = ChangeTracker.Entries()
+                .Where(x => x.Entity is Common && (x.State == EntityState.Added || x.State == EntityState.Modified));
+
+            foreach (var entity in entities)
+            {
+                var now = DateTime.UtcNow; // current datetime
+
+                if (entity.State == EntityState.Added)
+                {
+                    ((Common)entity.Entity).CreatedAt = now;
+                }
+                ((Common)entity.Entity).UpdatedAt = now;
+            }
+        }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
 
             modelBuilder.HasPostgresExtension("uuid-ossp");
 
@@ -35,7 +69,7 @@ namespace StoreService.Database.Contexts
                     p.Property(x => x.Id).HasDefaultValueSql("uuid_generate_v4()");
                 }
             );
-            
+
             // Market Table Configuration
             modelBuilder.Entity<Market>(
                 p =>

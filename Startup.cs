@@ -12,6 +12,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using StoreService.Database.Contexts;
+using StoreService.Repositories;
+using StoreService.Repositories.Category;
+using StoreService.Services.Category;
 
 namespace StoreService
 {
@@ -42,6 +45,16 @@ namespace StoreService
                           npSqlOptions.CommandTimeout(3300);
                       });
            });
+
+            // auto mapper
+            services.AddAutoMapper(cfg =>
+             {
+                 cfg.AddMaps(AppDomain.CurrentDomain.GetAssemblies());
+             });
+
+            services.AddScoped<ICategoryRepository, CategoryRepository>();
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.AddScoped<ICategoryService, CategoryService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

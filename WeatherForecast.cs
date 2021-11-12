@@ -1,6 +1,6 @@
 using System;
 
-namespace store_service
+namespace StoreService
 {
     public class WeatherForecast
     {

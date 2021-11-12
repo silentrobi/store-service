@@ -7,21 +7,18 @@ using System.Linq.Expressions;
 
 namespace StoreService.Repositories
 {
-    public class CrudRepository<T, TKey> : ICrudRepository<T, TKey> where T : class
+    public abstract class CrudRepository<T, TKey> : ICrudRepository<T, TKey> where T : class
     {
         protected DbContext _context;
 
-        protected readonly ILogger _logger;
-
-        public CrudRepository(DbContext context, ILogger logger)
+        public CrudRepository(DbContext context)
         {
             _context = context;
-            this._logger = logger;
         }
 
-        public virtual IEnumerable<T> Find()
+        public virtual ICollection<T> Find()
         {
-            throw new NotImplementedException();
+            return _context.Set<T>().ToList();
         }
 
         public virtual T GetById(TKey id)
@@ -35,9 +32,9 @@ namespace StoreService.Repositories
 
         }
 
-        public virtual T Delete(TKey id)
+        public virtual void Delete(T entity)
         {
-            throw new NotImplementedException();
+            _context.Set<T>().Remove(entity);
         }
 
         public virtual T Upsert(T entity)
@@ -45,24 +42,24 @@ namespace StoreService.Repositories
             throw new NotImplementedException();
         }
 
-        public virtual IEnumerable<T> Find(Expression<Func<T, bool>> predicate)
+        public virtual ICollection<T> Find(Expression<Func<T, bool>> predicate)
         {
             return _context.Set<T>().Where(predicate).ToList();
         }
 
         public T FindById(TKey id)
         {
-            throw new NotImplementedException();
+            return _context.Set<T>().Find(id);
         }
 
         public T Insert(T entity)
         {
-            throw new NotImplementedException();
+            return _context.Set<T>().Add(entity).Entity;
         }
 
         public T Update(T entity)
         {
-            throw new NotImplementedException();
+            return _context.Set<T>().Update(entity).Entity;
         }
     }
 }
