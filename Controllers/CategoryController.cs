@@ -13,11 +13,6 @@ namespace StoreService.Controllers
     [Route("[controller]")]
     public class CategoryController : ControllerBase
     {
-        private static readonly string[] Summaries = new[]
-        {
-            "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-        };
-
         private readonly ILogger<CategoryController> _logger;
         private readonly ICategoryService _categoryService;
         public CategoryController(ILogger<CategoryController> logger, ICategoryService categoryService)
@@ -55,6 +50,12 @@ namespace StoreService.Controllers
         {
             await _categoryService.DeleteAsync(id);
             return Ok();
+        }
+
+        [HttpGet("{id}/detail")]
+        public async Task<IActionResult> GetCategoryDetailAsync(Guid id)
+        {
+            return Ok( await _categoryService.GetCategoryDetailAsync(id));
         }
     }
 }

@@ -15,5 +15,7 @@ namespace StoreService.Services.Category
         Task<CategoryDto> UpdateAsync(Guid id, UpdateCategoryDto categoryDto);
 
         Task DeleteAsync(Guid id);
+
+        Task<CategoryDetailDto> GetCategoryDetailAsync(Guid id);
     }
 }

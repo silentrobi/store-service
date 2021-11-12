@@ -18,7 +18,7 @@ namespace StoreService.Repositories
 
         public virtual ICollection<T> Find()
         {
-            return _context.Set<T>().ToList();
+            return _context.Set<T>().AsNoTracking().ToList();
         }
 
         public virtual T GetById(TKey id)
@@ -44,7 +44,7 @@ namespace StoreService.Repositories
 
         public virtual ICollection<T> Find(Expression<Func<T, bool>> predicate)
         {
-            return _context.Set<T>().Where(predicate).ToList();
+            return _context.Set<T>().AsNoTracking().Where(predicate).ToList();
         }
 
         public T FindById(TKey id)

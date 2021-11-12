@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using StoreService.Dtos.Category;
+using StoreService.Dtos.Product;
 using StoreService.Repositories;
 using StoreService.Repositories.Category;
 
@@ -59,6 +60,26 @@ namespace StoreService.Services.Category
             return _categoryRepository.Find().ToList();
         }
 
+        public async Task<CategoryDetailDto> GetCategoryDetailAsync(Guid id)
+        {
+            var categoryEntity = await _categoryRepository.GetCategoryDetailAsync(id);
+            CategoryDetailDto categoryDetailDto = new CategoryDetailDto()
+            {
+                Id = categoryEntity.Id,
+                name = categoryEntity.name,
+                Products = _mapper.Map<IList<ProductDto>>(categoryEntity.Products.Select(x => new ProductDto()
+                {
+                    Id = x.Id,
+                    name = x.name,
+                    CategoryId = x.Category.Id,
+                    stockCount = x.stockCount,
+                    MarketIds = x.ProductMarkets.Select(x => x.MarketId).ToList()
+                }).ToList())
+            };
+
+            return categoryDetailDto;
+        }
+
         public async Task<CategoryDto> GetOneAsync(Guid id)
         {
             return _mapper.Map<CategoryDto>(_categoryRepository.FindById(id));
@@ -69,7 +90,7 @@ namespace StoreService.Services.Category
             Models.Category categoryEntity = _categoryRepository.FindById(id);
 
             if (categoryEntity == null) throw new Exception("Category Id not Found!");
-            
+
             categoryEntity.name = categoryDto.name;
 
             _categoryRepository.Update(categoryEntity);
