@@ -9,7 +9,7 @@ namespace StoreService.Dtos.Category
     public class CategoryDetailDto
     {
         public Guid Id { get; set; }
-        public string name { get; set; }
+        public string Name { get; set; }
 
         public IList<ProductDto> Products { get; set; }
     }

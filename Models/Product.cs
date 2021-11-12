@@ -8,8 +8,8 @@ namespace StoreService.Models
     {
         [Key]
         public Guid Id { get; set; }
-        public string name { get; set; }
-        public int stockCount { get; set; }
+        public string Name { get; set; }
+        public int StockCount { get; set; }
 
         public IList<MarketProduct> ProductMarkets { get; set; }
 

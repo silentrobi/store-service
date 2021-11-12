@@ -14,9 +14,9 @@ namespace StoreService.Database.Contexts
         }
 
         //Tables
-        public DbSet<Product> Product { get; set; }
-        public DbSet<Market> Market { get; set; }
-        public DbSet<Category> Category { get; set; }
+        public DbSet<Product> Products { get; set; }
+        public DbSet<Market> Markets { get; set; }
+        public DbSet<Category> Categories { get; set; }
 
 
         public override int SaveChanges()

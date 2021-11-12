@@ -33,15 +33,15 @@ namespace StoreService.Database.Migrations
                     b.Property<DateTime?>("DeletedAt")
                         .HasColumnType("timestamp without time zone");
 
+                    b.Property<string>("Name")
+                        .HasColumnType("text");
+
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("timestamp without time zone");
 
-                    b.Property<string>("name")
-                        .HasColumnType("text");
-
                     b.HasKey("Id");
 
-                    b.ToTable("Category");
+                    b.ToTable("Categories");
                 });
 
             modelBuilder.Entity("StoreService.Models.Market", b =>
@@ -51,24 +51,24 @@ namespace StoreService.Database.Migrations
                         .HasColumnType("uuid")
                         .HasDefaultValueSql("uuid_generate_v4()");
 
+                    b.Property<string>("Address")
+                        .HasColumnType("text");
+
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp without time zone");
 
                     b.Property<DateTime?>("DeletedAt")
                         .HasColumnType("timestamp without time zone");
 
+                    b.Property<string>("Nname")
+                        .HasColumnType("text");
+
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("timestamp without time zone");
 
-                    b.Property<string>("address")
-                        .HasColumnType("text");
-
-                    b.Property<string>("name")
-                        .HasColumnType("text");
-
                     b.HasKey("Id");
 
-                    b.ToTable("Market");
+                    b.ToTable("Markets");
                 });
 
             modelBuilder.Entity("StoreService.Models.MarketProduct", b =>
@@ -102,20 +102,20 @@ namespace StoreService.Database.Migrations
                     b.Property<DateTime?>("DeletedAt")
                         .HasColumnType("timestamp without time zone");
 
-                    b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.Property<string>("name")
+                    b.Property<string>("Name")
                         .HasColumnType("text");
 
-                    b.Property<int>("stockCount")
+                    b.Property<int>("StockCount")
                         .HasColumnType("integer");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp without time zone");
 
                     b.HasKey("Id");
 
                     b.HasIndex("CategoryId");
 
-                    b.ToTable("Product");
+                    b.ToTable("Products");
                 });
 
             modelBuilder.Entity("StoreService.Models.MarketProduct", b =>

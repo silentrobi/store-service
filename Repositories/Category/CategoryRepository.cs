@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -17,9 +18,8 @@ namespace StoreService.Repositories.Category
 
         public async Task<Models.Category> GetCategoryDetailAsync(Guid id)
         {
-            return await _dbContext.Category.AsNoTracking().Include(x => x.Products)
-            .ThenInclude(x => x.ProductMarkets)
-            .ThenInclude(x => x.Market).FirstOrDefaultAsync(x => x.Id == id);
+            return await _dbContext.Categories.AsNoTracking().Include(x => x.Products)
+            .ThenInclude(x => x.ProductMarkets).FirstOrDefaultAsync(x => x.Id == id);
         }
     }
 }

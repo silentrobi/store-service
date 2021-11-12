@@ -66,13 +66,13 @@ namespace StoreService.Services.Category
             CategoryDetailDto categoryDetailDto = new CategoryDetailDto()
             {
                 Id = categoryEntity.Id,
-                name = categoryEntity.name,
+                Name = categoryEntity.Name,
                 Products = _mapper.Map<IList<ProductDto>>(categoryEntity.Products.Select(x => new ProductDto()
                 {
                     Id = x.Id,
-                    name = x.name,
+                    Name = x.Name,
                     CategoryId = x.Category.Id,
-                    stockCount = x.stockCount,
+                    StockCount = x.StockCount,
                     MarketIds = x.ProductMarkets.Select(x => x.MarketId).ToList()
                 }).ToList())
             };
@@ -91,7 +91,7 @@ namespace StoreService.Services.Category
 
             if (categoryEntity == null) throw new Exception("Category Id not Found!");
 
-            categoryEntity.name = categoryDto.name;
+            categoryEntity.Name = categoryDto.Name;
 
             _categoryRepository.Update(categoryEntity);
 

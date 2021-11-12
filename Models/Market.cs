@@ -8,8 +8,8 @@ namespace StoreService.Models
     {
         [Key]
         public Guid Id { get; set; }
-        public string name { get; set; }
-        public string address { get; set; }
+        public string Nname { get; set; }
+        public string Address { get; set; }
 
         public IList<MarketProduct> MarketProducts { get; set; }
     }

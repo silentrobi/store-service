@@ -8,9 +8,8 @@ namespace StoreService.Dtos.Product
     public class ProductDto
     {
         public Guid Id { get; set; }
-        public string name { get; set; }
-        public int stockCount { get; set; }
-
+        public string Name { get; set; }
+        public int StockCount { get; set; }
         public Guid CategoryId { get; set; }
         public IList<Guid> MarketIds { get; set; }
     }

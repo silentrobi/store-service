@@ -5,7 +5,7 @@ namespace StoreService.Dtos.Market
     [AutoMap(typeof(Models.Market), ReverseMap = true)]
     public class UpdateMarketDto
     {
-        public string name { get; set; }
-        public string address { get; set; }
+        public string Name { get; set; }
+        public string Address { get; set; }
     }
 }
