@@ -6,6 +6,6 @@ namespace StoreService.Repositories.Category
 {
     public interface ICategoryRepository : ICrudRepository<Models.Category, Guid>
     {
-        Task<Models.Category> GetCategoryDetailAsync(Guid id);
+        Task<CategoryDetailDto> GetCategoryDetailAsync(Guid id);
     }
 }

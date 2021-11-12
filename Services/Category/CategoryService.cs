@@ -62,22 +62,7 @@ namespace StoreService.Services.Category
 
         public async Task<CategoryDetailDto> GetCategoryDetailAsync(Guid id)
         {
-            var categoryEntity = await _categoryRepository.GetCategoryDetailAsync(id);
-            CategoryDetailDto categoryDetailDto = new CategoryDetailDto()
-            {
-                Id = categoryEntity.Id,
-                Name = categoryEntity.Name,
-                Products = _mapper.Map<IList<ProductDto>>(categoryEntity.Products.Select(x => new ProductDto()
-                {
-                    Id = x.Id,
-                    Name = x.Name,
-                    CategoryId = x.Category.Id,
-                    StockCount = x.StockCount,
-                    MarketIds = x.ProductMarkets.Select(x => x.MarketId).ToList()
-                }).ToList())
-            };
-
-            return categoryDetailDto;
+            return await _categoryRepository.GetCategoryDetailAsync(id);
         }
 
         public async Task<CategoryDto> GetOneAsync(Guid id)
